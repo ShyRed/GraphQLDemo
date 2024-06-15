@@ -9,5 +9,7 @@ public sealed class BlogProfile : Profile
     public BlogProfile()
     {
         CreateMap<BlogPost, BlogPostType>();
+        CreateMap<BlogTag, BlogTagType>();
+        CreateMap<BlogAuthor, BlogAuthorType>();
     }
 }

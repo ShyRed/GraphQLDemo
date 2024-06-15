@@ -17,9 +17,11 @@ public static class Program
             .AddAutoMapper(typeof(Program));
         
         // Setup database
+        var dbPath = System.IO.Path.Combine( new System.IO.FileInfo(typeof(Program).Assembly.Location).DirectoryName!,
+            "graphqldemo.db");
         builder.Services
             .AddPooledDbContextFactory<BlogContext>( options => 
-                options.UseInMemoryDatabase("Blog")
+                options.UseSqlite($"Data Source={dbPath}")
                     .EnableSensitiveDataLogging()
                     .LogTo(message => Debug.WriteLine(message)));
         

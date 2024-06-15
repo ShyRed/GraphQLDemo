@@ -9,4 +9,8 @@ public class BlogPostType
     public string Description { get; set; } = string.Empty;
     
     public string Text { get; set; } = string.Empty;
+    
+    public IEnumerable<BlogTagType> Tags { get; set; } = default!;
+    
+    public BlogAuthorType Author { get; set; } = default!;
 }
