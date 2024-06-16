@@ -15,7 +15,7 @@ public class BlogPost
     [MaxLength(16000)]
     public string Text { get; set; } = string.Empty;
 
-    public IEnumerable<BlogTag> Tags { get; set; } = default!;
+    public ICollection<BlogTag> Tags { get; set; } = default!;
     
     public BlogAuthor Author { get; set; } = default!;
 }

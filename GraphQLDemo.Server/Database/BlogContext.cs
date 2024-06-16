@@ -12,8 +12,7 @@ public class BlogContext(DbContextOptions<BlogContext> options) : DbContext(opti
     public static async Task Initialize(AsyncServiceScope scope)
     {
         // Create database context and apply entity framework migrations.
-        var factory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<BlogContext>>();
-        await using var database = await factory.CreateDbContextAsync();
+        var database = scope.ServiceProvider.GetRequiredService<BlogContext>();
         await database.Database.MigrateAsync();
 
         // Do not initialize database with fake data, if there is already

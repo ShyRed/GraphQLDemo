@@ -15,5 +15,5 @@ public class BlogAuthor
     [MaxLength(255)]
     public string LastName { get; set; } = string.Empty;
     
-    public IEnumerable<BlogPost> BlogPosts { get; set; } = default!;
+    public ICollection<BlogPost> BlogPosts { get; set; } = default!;
 }

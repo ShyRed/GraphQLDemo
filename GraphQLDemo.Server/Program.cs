@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using GraphQLDemo.Server.Database;
-using GraphQLDemo.Server.Schema.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace GraphQLDemo.Server;
@@ -11,33 +10,28 @@ public static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Setup AutoMapper to enable mappings from
-        // database entities to schema entities
-        builder.Services
-            .AddAutoMapper(typeof(Program));
-        
         // Setup database
         var dbPath = System.IO.Path.Combine( new System.IO.FileInfo(typeof(Program).Assembly.Location).DirectoryName!,
             "graphqldemo.db");
         builder.Services
-            .AddPooledDbContextFactory<BlogContext>( options => 
+            .AddDbContext<BlogContext>( options => 
                 options.UseSqlite($"Data Source={dbPath}")
                     .EnableSensitiveDataLogging()
                     .LogTo(message => Debug.WriteLine(message)));
         
-        // Enable authorization
         builder.Services
+            .AddCors()
             .AddAuthorization();
             
         // Setup GraphQL
         builder.Services
             .AddGraphQLServer()
-            .RegisterDbContext<BlogContext>(DbContextKind.Pooled)
-            .AddQueryType<Query>()
+            .AddTypes()
             .AddProjections()
             .AddFiltering()
             .AddSorting()
-            .AddQueryableCursorPagingProvider();
+            .AddQueryableCursorPagingProvider()
+            .RegisterDbContext<BlogContext>();
 
         var app = builder.Build();
 
@@ -47,6 +41,7 @@ public static class Program
         
         // Setup middlewares
         app.UseHttpsRedirection();
+        app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
         app.UseAuthorization();
         app.MapGraphQL();
         

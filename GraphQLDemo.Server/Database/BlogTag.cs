@@ -9,5 +9,5 @@ public class BlogTag
     [MaxLength(128)]
     public string Name { get; set; } = default!;
 
-    public IEnumerable<BlogPost> BlogPosts { get; set; } = default!;
+    public ICollection<BlogPost> BlogPosts { get; set; } = default!;
 }
