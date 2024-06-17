@@ -7,9 +7,10 @@ namespace GraphQLDemo.Server.Schema.BlogPosts;
 public static class BlogAuthorQueries
 {
     [UsePaging]
+    [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public static IQueryable<BlogAuthor> GetBlogTags(BlogContext blogContext)
+    public static IQueryable<BlogAuthor> GetBlogAuthors(BlogContext blogContext)
         => blogContext.BlogAuthors;
     
     [DataLoader]

@@ -1,5 +1,4 @@
 ﻿using GraphQLDemo.Server.Database;
-using HotChocolate.Resolvers;
 using Microsoft.EntityFrameworkCore;
 
 namespace GraphQLDemo.Server.Schema.BlogPosts;
@@ -8,6 +7,7 @@ namespace GraphQLDemo.Server.Schema.BlogPosts;
 public static class BlogPostQueries
 {
     [UsePaging]
+    [UseProjection]
     [UseFiltering]
     [UseSorting]
     public static IQueryable<BlogPost> GetBlogPosts(BlogContext blogContext)

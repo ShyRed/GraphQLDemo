@@ -9,9 +9,9 @@ public sealed class BlogTagNode
     [NodeResolver]
     public static async Task<BlogTag> GetBlogTagByIdAsync(
         Guid id,
-        IBlogTagsByIdDataLoader blogTagById,
+        IBlogTagsByIdDataLoader blogTagsById,
         CancellationToken cancellationToken)
-        => await blogTagById
+        => await blogTagsById
             .LoadAsync(id, cancellationToken)
             .ConfigureAwait(false);
 }
